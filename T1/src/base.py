@@ -1,14 +1,15 @@
 import sys
 import os
 import cv2
-import numpy
+import numpy as np
 import easygui
 
-print ("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
+print("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
+
 
 def show_frame(window_name, imagen, valorAbsoluto = False, escalarMin0Max255 = False):
     if valorAbsoluto:
-        imagen_abs = numpy.abs(imagen)
+        imagen_abs = np.abs(imagen)
     else:
         imagen_abs = imagen
     if escalarMin0Max255:
