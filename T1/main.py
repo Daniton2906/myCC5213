@@ -27,7 +27,7 @@ else:
 '''
 
 from src.first_phase import *
-import glob
+
 
 if input('Codificar comerciales? Si(0) No(~0)') == '0':
     comerciales_list = []

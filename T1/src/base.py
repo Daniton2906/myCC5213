@@ -2,7 +2,9 @@ import sys
 import os
 import cv2
 import numpy as np
+import scipy.spatial.distance as ssdist
 import easygui
+import glob
 
 print("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
 
