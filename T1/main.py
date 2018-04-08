@@ -28,7 +28,7 @@ else:
 
 from src.first_phase import *
 
-
+framespercell = 10
 if input('Codificar comerciales? Si(0) No(~0)') == '0':
     comerciales_list = []
     os.chdir("data/comerciales/")
@@ -40,8 +40,8 @@ if input('Codificar comerciales? Si(0) No(~0)') == '0':
 
     print(len(comerciales_list))
 
-    extractor1 = Extractor(comerciales_list, 3)
-    r = extractor1.process_data(data_folder + "/comerciales/", margin={'top': 30, 'left': 43, 'bottom': 30, 'right': 43})
+    extractor1 = Extractor(comerciales_list, framespercell)
+    r = extractor1.process_data(data_folder + "/comerciales/") #, margin={'top': 30, 'left': 43, 'bottom': 30, 'right': 43})
     print("Comerciales codificados...")
     extractor1.codify(data_folder + "/comerc_txt/")
     os.chdir("../../")
@@ -57,8 +57,7 @@ if input('Codificar television? Si(0) No(~0)') == '0':
 
     print(tele_list)
 
-    extractor1 = Extractor(tele_list[0:1], 3)
-    r = extractor1.process_data(data_folder + "/television/", max_frames=100000)
+    extractor1 = Extractor(tele_list[0:1], framespercell)
+    r = extractor1.process_data(data_folder + "/television/", max_frames=50000)
     print("Videos codificados...")
     extractor1.codify(data_folder + "/tele_txt/")
-

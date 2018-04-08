@@ -1,9 +1,6 @@
 from src.base import *
 from tools.hist_descriptor import HistDescriptor
 
-
-data_folder = "C:/Users/Daniel/Desktop/Semestre2018-1/multimedia/myCC5213/T1/data"
-
 '''
 Extractor class
     Info:
@@ -64,7 +61,7 @@ class Extractor:
             self.__output.append(np.array(results, dtype=int))
         return self.__output
 
-    def codify(self, folder=data_folder):
+    def codify(self, folder):
         for i in range(len(self.__data)):
             filename = folder + self.__data[i][:-4] + str(self.__output[i].shape) + ".txt"
             open(filename, 'w').close()

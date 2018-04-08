@@ -2,12 +2,10 @@ import sys
 import os
 import cv2
 import numpy as np
-import scipy.spatial.distance as ssdist
 import easygui
 import glob
 
 print("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
-
 
 def show_frame(window_name, imagen, valorAbsoluto = False, escalarMin0Max255 = False):
     if valorAbsoluto:
@@ -36,3 +34,6 @@ def open_video(filename):
     if capture is None or not capture.isOpened():
         raise Exception("no puedo abrir video {}".format(filename))
     return capture
+
+# GLOBAL VARRIABLES
+data_folder = "C:/Users/Daniel/Desktop/Semestre2018-1/multimedia/myCC5213/T1/data"
