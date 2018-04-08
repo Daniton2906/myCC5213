@@ -1,63 +1,17 @@
-'''
-import sys
-import cv2 as cv
-import numpy as np
-import os
-
-data_path = '/data/cachorro.jpg'
-
-dirname = os.path.dirname(__file__)
-filename = os.path.join(dirname, data_path)
-
-# Load an color image in grayscale
-# img = cv.imread(data_path + 'gato.jpg', 0)
-img = cv.imread('/data/cachorro.png', 0)
-print(img)
-a = True
-
-if a:
-	cv.imshow('image',img)
-	cv.waitKey(0)
-	cv.destroyAllWindows()
-else:
-	cv.namedWindow('image', cv.WINDOW_NORMAL)
-	cv.imshow('image',img)
-	cv.waitKey(0)
-	cv.destroyAllWindows()
-'''
-
 from src.first_phase import *
 
-framespercell = 10
 if input('Codificar comerciales? Si(0) No(~0)') == '0':
-    comerciales_list = []
-    os.chdir("data/comerciales/")
-    if not os.path.isdir(data_folder + "/comerc_txt/"):
-        os.mkdir(data_folder + "/comerc_txt/")
-
-    for filename in glob.glob('*.mpg'):
-        comerciales_list.append(filename)
-
+    comerciales_list = load_filenames(C_FOLDER, "mpg")
     print(len(comerciales_list))
-
-    extractor1 = Extractor(comerciales_list, framespercell)
-    r = extractor1.process_data(data_folder + "/comerciales/") #, margin={'top': 30, 'left': 43, 'bottom': 30, 'right': 43})
+    extractor1 = Extractor(comerciales_list, FRAMES_PER_CELL)
+    r = extractor1.process_data(MAIN_FOLDER + DATA_FOLDER + C_FOLDER) #, margin={'top': 30, 'left': 43, 'bottom': 30, 'right': 43})
     print("Comerciales codificados...")
-    extractor1.codify(data_folder + "/comerc_txt/")
-    os.chdir("../../")
+    extractor1.codify(MAIN_FOLDER + DATA_FOLDER + C_DESCRIP_FOLDER)
 
 if input('Codificar television? Si(0) No(~0)') == '0':
-    tele_list = []
-    os.chdir("data/television/")
-    if not os.path.isdir(data_folder + "/tele_txt/"):
-        os.mkdir(data_folder + "/tele_txt/")
-
-    for filename in glob.glob('*.mp4'):
-        tele_list.append(filename)
-
+    tele_list = load_filenames(TV_FOLDER, "mp4")
     print(tele_list)
-
-    extractor1 = Extractor(tele_list[0:1], framespercell)
-    r = extractor1.process_data(data_folder + "/television/", max_frames=50000)
+    extractor2 = Extractor(tele_list[0:1], FRAMES_PER_CELL)
+    r = extractor2.process_data(MAIN_FOLDER + DATA_FOLDER + TV_FOLDER, max_frames=50000)
     print("Videos codificados...")
-    extractor1.codify(data_folder + "/tele_txt/")
+    extractor2.codify(MAIN_FOLDER + DATA_FOLDER + TV_DESCRIP_FOLDER)

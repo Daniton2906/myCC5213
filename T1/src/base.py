@@ -7,16 +7,30 @@ import glob
 
 print("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
 
-def show_frame(window_name, imagen, valorAbsoluto = False, escalarMin0Max255 = False):
+# GLOBAL VARRIABLES
+MAIN_FOLDER = "C:/Users/Daniel/Desktop/Semestre2018-1/multimedia/myCC5213/T1/"
+DATA_FOLDER = "data/"
+C_FOLDER = "comerciales/"
+TV_FOLDER = "television/"
+C_DESCRIP_FOLDER = "comerc_descriptors/"
+TV_DESCRIP_FOLDER = "tv_descriptors/"
+KNF_FOLDER = "knf_nearest_frames/"
+RESULTS_FOLDER = "results/"
+
+FRAMES_PER_CELL = 10
+K = 3
+
+
+def show_frame(window_name, image, valorAbsoluto= False, escalarMin0Max255= False):
     if valorAbsoluto:
-        imagen_abs = np.abs(imagen)
+        image_abs = np.abs(image)
     else:
-        imagen_abs = imagen
+        image_abs = image
     if escalarMin0Max255:
-        imagen_norm = cv2.normalize(imagen_abs, dst=None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
+        image_norm = cv2.normalize(image_abs, dst=None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_8U)
     else:
-        imagen_norm = imagen_abs
-    cv2.imshow(window_name, imagen_norm)
+        image_norm = image_abs
+    cv2.imshow(window_name, image_norm)
 
 
 def open_video(filename):
@@ -35,5 +49,16 @@ def open_video(filename):
         raise Exception("no puedo abrir video {}".format(filename))
     return capture
 
-# GLOBAL VARRIABLES
-data_folder = "C:/Users/Daniel/Desktop/Semestre2018-1/multimedia/myCC5213/T1/data"
+
+def load_filenames(files_folder, file_format, data_folder=DATA_FOLDER):
+    new_list = []
+    folder = data_folder + files_folder
+    os.chdir(folder)
+    if not os.path.isdir(MAIN_FOLDER + folder):
+        os.mkdir(MAIN_FOLDER + folder)
+
+    for filename in glob.glob("*." + file_format):
+        new_list.append(filename)
+
+    os.chdir("../../")
+    return new_list

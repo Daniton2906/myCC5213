@@ -12,7 +12,7 @@ Extractor class
 '''
 class Extractor:
 
-    def __init__(self, data_file_names=[], frames=1):
+    def __init__(self, data_file_names, frames=1):
         self.__data = data_file_names
         self.__fpc = frames
         self.__output = []
@@ -22,7 +22,7 @@ class Extractor:
         self.__fpc = f
 
     #create np array for each video
-    def process_data(self, folder=data_folder, margin=None, max_frames=-1):
+    def process_data(self, folder, margin=None, max_frames=-1):
         results = []
         for fn in self.__data:
             capture = open_video(folder + fn)
@@ -61,14 +61,10 @@ class Extractor:
             self.__output.append(np.array(results, dtype=int))
         return self.__output
 
+    # write results on memory
     def codify(self, folder):
         for i in range(len(self.__data)):
             filename = folder + self.__data[i][:-4] + str(self.__output[i].shape) + ".txt"
             open(filename, 'w').close()
             print("escribiendo en archivo {}".format(filename))
             np.savetxt(filename, self.__output[i].flatten())
-
-
-
-#for filename in os.listdir(os.getcwd()):
-    #    comerciales_list.append(filename)
