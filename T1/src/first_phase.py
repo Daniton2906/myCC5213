@@ -63,6 +63,9 @@ class Extractor:
 
     # write results on memory
     def codify(self, folder):
+        if not os.path.isdir(folder):
+            os.mkdir(folder)
+
         for i in range(len(self.__data)):
             filename = folder + self.__data[i][:-4] + str(self.__output[i].shape) + ".txt"
             open(filename, 'w').close()

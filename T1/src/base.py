@@ -54,8 +54,6 @@ def load_filenames(files_folder, file_format, data_folder=DATA_FOLDER):
     new_list = []
     folder = data_folder + files_folder
     os.chdir(folder)
-    if not os.path.isdir(MAIN_FOLDER + folder):
-        os.mkdir(MAIN_FOLDER + folder)
 
     for filename in glob.glob("*." + file_format):
         new_list.append(filename)
