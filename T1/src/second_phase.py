@@ -16,7 +16,7 @@ class Comparator:
             loaded_nparray = Loader.load_numpy_from_list(fn, folder)
             #print("size: {} \ndata: {}".format(loaded_nparray.shape, loaded_nparray))
             self.__descriptors.append(loaded_nparray)
-            print(loaded_nparray.shape)
+            #print(loaded_nparray.shape)
 
         return self.__descriptors
 
@@ -31,7 +31,7 @@ class Comparator:
         for tele_frame in tele_descriptor:
             # Create a array with at least k elements
             my_array = KArray(k)
-            print("Frame: {}".format(count))
+            #print("Frame: {}".format(count))
             # Search for the k nearest frames along all comerc descriptors
             for d_index in range(len(self.__descriptors)):
                 for f_index in range(len(self.__descriptors[d_index])):
@@ -42,6 +42,7 @@ class Comparator:
                     my_array.insert(new_candidate)
             # Append k-nearest frames of the current tele_frame
             result_array.append(np.reshape(np.array(my_array.get_array()), (k, 3)))
+            #print(result_array[-1])
             count += 1
         return np.array(result_array, dtype=np.str)
 
@@ -52,4 +53,4 @@ class Comparator:
         new_filename = folder + Loader.get_original_name(name) + "{}".format(data.shape) + ".txt"
         open(new_filename, 'w').close()
         print("escribiendo en archivo {}".format(new_filename))
-        np.savetxt(new_filename, data.flatten(), delimiter=' ', fmt="%s")
+        np.savetxt(new_filename, data.flatten(), delimiter='\t', fmt="%s")
