@@ -4,9 +4,10 @@ from src.base import *
 class Loader:
 
     @staticmethod
-    def load_numpy_from_list(fn, path, type=int):
+    def load_numpy_from_list(fn, path, type=int, delim='\t'):
         shape = Loader.get_shape(fn)
-        return np.reshape(np.loadtxt((path + fn), dtype=type), shape)
+        print(shape)
+        return np.reshape(np.loadtxt((path + fn), delimiter=delim, dtype=type), shape)
 
     @staticmethod
     def get_original_name(fn):
