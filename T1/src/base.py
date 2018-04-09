@@ -4,21 +4,23 @@ import cv2
 import numpy as np
 import easygui
 import glob
+import time
 
 print("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
 
 # GLOBAL VARRIABLES
 MAIN_FOLDER = "C:/Users/Daniel/Desktop/Semestre2018-1/multimedia/myCC5213/T1/"
 DATA_FOLDER = "data/"
+MAIN_DATA_FOLDER = MAIN_FOLDER + DATA_FOLDER
 C_FOLDER = "comerciales/"
 TV_FOLDER = "television/"
 C_DESCRIP_FOLDER = "comerc_descriptors/"
 TV_DESCRIP_FOLDER = "tv_descriptors/"
-KNF_FOLDER = "knf_nearest_frames/"
+KNF_FOLDER = "k_nearest_frames/"
 RESULTS_FOLDER = "results/"
 
 FRAMES_PER_CELL = 10
-K = 3
+K = 10
 
 
 def show_frame(window_name, image, valorAbsoluto= False, escalarMin0Max255= False):

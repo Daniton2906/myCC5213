@@ -22,10 +22,10 @@ class Extractor:
         self.__fpc = f
 
     #create np array for each video
-    def process_data(self, folder, margin=None, max_frames=-1):
-        results = []
+    def process_data(self, folder, margin=None, max_frames=-1, rsize=None):
         for fn in self.__data:
             capture = open_video(folder + fn)
+            results = []
             counter = -1
             while capture.grab():
                 #convert a frame each fpc amount of frames
@@ -33,6 +33,7 @@ class Extractor:
                 if counter % self.__fpc != 0:
                     continue
                 elif 0 < max_frames <= counter // self.__fpc:
+                    print(counter)
                     break
                 retval, frame = capture.retrieve()
                 if not retval:
@@ -44,6 +45,10 @@ class Extractor:
                     frame = frame[margin['top']:xs-margin['bottom'], margin['left']:ys-margin['right']]
                 frame_gris = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
+                if rsize is not None:
+                    frame_gris = cv2.resize(frame_gris, rsize) #, interpolation=cv2.INTER_CUBIC)
+
+                #print(frame_gris.shape)
                 descriptor = HistDescriptor(16, 4, 4)
                 hist_list = descriptor.get_descriptor(frame_gris)
                 #print(hist_list)
@@ -67,7 +72,12 @@ class Extractor:
             os.mkdir(folder)
 
         for i in range(len(self.__data)):
-            filename = folder + self.__data[i][:-4] + str(self.__output[i].shape) + ".txt"
+            fixed_fn = self.__data[i][:-4]
+            if "(" in fixed_fn:
+                fixed_fn = fixed_fn.replace("(", "[")
+            if ")" in fixed_fn:
+                fixed_fn = fixed_fn.replace(")", "]")
+            filename = folder + fixed_fn + str(self.__output[i].shape) + ".txt"
             open(filename, 'w').close()
             print("escribiendo en archivo {}".format(filename))
-            np.savetxt(filename, self.__output[i].flatten())
+            np.savetxt(filename, self.__output[i].flatten(), delimiter='\t')
