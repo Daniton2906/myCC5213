@@ -53,14 +53,14 @@ class Extractor:
                 hist_list = descriptor.get_descriptor(frame_gris)
                 #print(hist_list)
                 results.append(hist_list)
-
+                '''
                 cv2.imshow("VIDEO", frame_gris)
                 key = cv2.waitKey(1) & 0xFF
                 if key == ord(' '):
                     key = cv2.waitKey(0) & 0xFF
                 if key == ord('q') or key == 27:
                     break
-
+                '''
             capture.release()
             #cv2.destroyAllWindows()
             self.__output.append(np.array(results, dtype=int))

@@ -21,7 +21,6 @@ class Loader:
 
     @staticmethod
     def get_raw_name(fn):
-        fn.replace("[", "(")
-        fn.replace("]", ")")
-        return fn
+        fn = fn.replace("[", "(")
+        return fn.replace("]", ")")
 
