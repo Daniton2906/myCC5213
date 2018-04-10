@@ -1,7 +1,6 @@
 from src.base import *
 from tools.k_array import KArray
 from tools.loader import Loader
-import scipy.spatial.distance as ssdist
 
 
 class Comparator:
@@ -20,7 +19,7 @@ class Comparator:
 
         return self.__descriptors
 
-    def k_nearest_frames(self, k, master_file, folder):
+    def k_nearest_frames(self, k, descrip_comparer, master_file, folder):
         assert k >= 1
         # Get television descriptor
         tele_descriptor = Loader.load_numpy_from_list(master_file, folder)
@@ -36,7 +35,7 @@ class Comparator:
             for d_index in range(len(self.__descriptors)):
                 for f_index in range(len(self.__descriptors[d_index])):
                     # Calculate distance between tele frame and the current comerc frame
-                    distance = ssdist.minkowski(tele_frame.flatten(), self.__descriptors[d_index][f_index].flatten())
+                    distance = descrip_comparer.compare(tele_frame, self.__descriptors[d_index][f_index])
                     new_candidate = (distance, self.__data[d_index], f_index) # (distance, filename, frame_index)
                     # Try to insert only if the new distance is less than the k-first distances
                     my_array.insert(new_candidate)

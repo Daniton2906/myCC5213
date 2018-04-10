@@ -1,14 +1,26 @@
 from src.base import *
-from tools.hist_descriptor import HistDescriptor
+from tools.descriptors import HistDescriptor, IntensityVectorDescriptor
 
 '''
 Extractor class
     Info:
         First phase, receives a list with video filenames and write them
         on txt files for the next phase.        
-    Params:
-        data: list with all video filenames for processing
-        frames: frames difference per cell 
+    Constructor Params:
+        data_file_names: list with all video filenames for processing
+        frames: amount of frames it jump for each frame (if 30 fps and frames = 10 --> takes 3 frames per second)
+        ---> saves data_file_names and frames, create output list
+    Methods:          
+        set_fpc: f(int) -> None
+            -->  if necessary, set frames per cell (fpc) to 'f'
+        process_data: folder(str) margin(dict) max_frames(int) rsize(int tuple) -> int-tuple list 
+            --> calculates histogram descriptors according to the given filenames that should be located 
+                in the given 'folder'. If necessary, cut each frame according to the given 'margin' dict, limits 
+                the processed frame to 'max_frames' int and resize each frame according to the given 'rsize' tuple.
+                Returns the result as a ()int-tuple list  
+        codify: folder(str) -> None 
+            --> writes results on memory in the given 'folder', if any filename has the characters '(' or ')', it
+                will be change for '[' and ']' since the new files are written using this key characters
 '''
 class Extractor:
 
@@ -22,7 +34,7 @@ class Extractor:
         self.__fpc = f
 
     #create np array for each video
-    def process_data(self, folder, margin=None, max_frames=-1, rsize=None):
+    def process_data(self, folder, descrip_converter, margin=None, max_frames=-1, debug=False):
         for fn in self.__data:
             capture = open_video(folder + fn)
             results = []
@@ -33,7 +45,6 @@ class Extractor:
                 if counter % self.__fpc != 0:
                     continue
                 elif 0 < max_frames <= counter // self.__fpc:
-                    print(counter)
                     break
                 retval, frame = capture.retrieve()
                 if not retval:
@@ -43,24 +54,20 @@ class Extractor:
                 ys = frame.shape[1]+1
                 if margin is not None:
                     frame = frame[margin['top']:xs-margin['bottom'], margin['left']:ys-margin['right']]
-                frame_gris = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-                if rsize is not None:
-                    frame_gris = cv2.resize(frame_gris, rsize) #, interpolation=cv2.INTER_CUBIC)
+                if debug:
+                    cv2.imshow("VIDEO", frame)
+                    key = cv2.waitKey(1) & 0xFF
+                    if key == ord(' '):
+                        key = cv2.waitKey(0) & 0xFF
+                    if key == ord('q') or key == 27:
+                        break
 
-                #print(frame_gris.shape)
-                descriptor = HistDescriptor(16, 4, 4)
-                hist_list = descriptor.get_descriptor(frame_gris)
+                #print(frame.shape)
+                frame_descript = descrip_converter.get_descriptor(frame)
                 #print(hist_list)
-                results.append(hist_list)
-                '''
-                cv2.imshow("VIDEO", frame_gris)
-                key = cv2.waitKey(1) & 0xFF
-                if key == ord(' '):
-                    key = cv2.waitKey(0) & 0xFF
-                if key == ord('q') or key == 27:
-                    break
-                '''
+                results.append(frame_descript)
+
             capture.release()
             #cv2.destroyAllWindows()
             self.__output.append(np.array(results, dtype=int))

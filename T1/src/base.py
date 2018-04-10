@@ -19,13 +19,6 @@ TV_DESCRIP_FOLDER = "tv_descriptors/"
 KNF_FOLDER = "k_nearest_frames/"
 RESULTS_FOLDER = "results/"
 
-FRAMES_PER_CELL = 10
-K = 10
-RESIZE = (320, 180) #(160, 90)
-FPS_RATE = 30
-TOLERANCE = 50
-EPSILON = 4
-
 def show_frame(window_name, image, valorAbsoluto= False, escalarMin0Max255= False):
     if valorAbsoluto:
         image_abs = np.abs(image)

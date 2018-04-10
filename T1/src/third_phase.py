@@ -25,7 +25,7 @@ class Detector:
             self.__data.append(kbox)
         return self.__data
 
-    def detect_match(self, tolerance=TOLERANCE):
+    def detect_match(self, epsilon, tolerance):
         # Each KBox corresponds to one television file with
         # its frames and their k nearest frames
         for kbox in self.__data:
@@ -37,7 +37,7 @@ class Detector:
                     #print(similar_frame)
                     #print(similar_frame.get_frame())
                     if 0 <= similar_frame.get_frame() <= 1:
-                        sequence = Matcher.find_subsequence(similar_frame, i, kbox, epsilon=EPSILON)
+                        sequence = Matcher.find_subsequence(similar_frame, i, kbox, epsilon=epsilon)
                         precision = (len(sequence) / self.__comerc_sizes[Loader.get_original_name(similar_frame.get_file())]) * 100
                         if precision > tolerance:
                             #print("Frame: {}".format(i))
@@ -48,7 +48,7 @@ class Detector:
 
         return self.__matches
 
-    def filter_write_results(self, fname, folder):
+    def filter_write_results(self, fname, folder, epsilon, spf):
         if not os.path.isdir(folder):
             os.mkdir(folder)
 
@@ -60,7 +60,7 @@ class Detector:
                 next_frame, match = self.__matches[i][0]
                 filter_frame, filter_match = next_frame, list(filter(lambda x: x is not None, match))
                 for frame, movie in self.__matches[i]:
-                    if max(0, frame - EPSILON) <= next_frame <= frame + EPSILON:
+                    if max(0, frame - epsilon) <= next_frame <= frame + epsilon:
                         filter_movie = list(filter(lambda x: x is not None, movie))
                         if (filter_match[-1].get_frame() - filter_match[0].get_frame()) \
                                 < (filter_movie[-1].get_frame() - filter_movie[0].get_frame()):
@@ -86,8 +86,8 @@ class Detector:
             video_tv = Loader.get_raw_name(self.__data[i].get_master_filename())
             #print((FPS_RATE // FRAMES_PER_CELL))
             for frame, movie in filter_data[i]:
-                start = (movie[0].get_frame() + frame) / (FPS_RATE//FRAMES_PER_CELL)
-                delta = ((movie[-1].get_frame() + frame) / (FPS_RATE // FRAMES_PER_CELL)) - start
+                start = (movie[0].get_frame() + frame) / spf
+                delta = ((movie[-1].get_frame() + frame) / spf) - start
                 video_comerc = Loader.get_original_name(movie[-1].get_file(), raw=True)
                 fd.write("{}\t{}\t{}\t{}\n".format(video_tv, round(start, 1), round(delta,1), video_comerc))
 
