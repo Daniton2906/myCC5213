@@ -20,7 +20,7 @@ KNF_FOLDER = "k_nearest_frames/"
 RESULTS_FOLDER = "results/"
 
 FRAMES_PER_CELL = 10
-K = 12
+K = 10
 RESIZE = (320, 180) #(160, 90)
 FPS_RATE = 30
 TOLERANCE = 50

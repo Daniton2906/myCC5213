@@ -75,15 +75,16 @@ class Detector:
                 continue
             filter_data.append(filter_list)
 
-        print(filter_data)
+        suma = 0
         for flist in filter_data:
-            print(len(flist))
+            suma += len(flist)
+        print("Comerciales encontrados: {}...".format(suma))
 
         #write data
         fd = open(folder + fname, 'w')
         for i in range(len(self.__data)):
             video_tv = Loader.get_raw_name(self.__data[i].get_master_filename())
-            print((FPS_RATE // FRAMES_PER_CELL))
+            #print((FPS_RATE // FRAMES_PER_CELL))
             for frame, movie in filter_data[i]:
                 start = (movie[0].get_frame() + frame) / (FPS_RATE//FRAMES_PER_CELL)
                 delta = ((movie[-1].get_frame() + frame) / (FPS_RATE // FRAMES_PER_CELL)) - start
