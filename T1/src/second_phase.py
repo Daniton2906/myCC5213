@@ -24,7 +24,7 @@ class Comparator:
         assert k >= 1
         # Get television descriptor
         tele_descriptor = Loader.load_numpy_from_list(master_file, folder)
-        print(tele_descriptor.shape)
+        #print(tele_descriptor.shape)
         result_array = []
         count = 0
         # From each frame

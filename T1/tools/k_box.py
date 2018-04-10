@@ -20,7 +20,7 @@ class Cell:
         return self.__value, self.__file, self.__frame
 
     def __eq__(self, other):
-        return self.get_file() == other.get_file()
+        return other is not None and self.get_file() == other.get_file()
 
     def __str__(self):
         return "({}, {}, {})".format(self.__value, self.__file, self.__frame)
@@ -66,6 +66,9 @@ class KBox:
     def load_info(self, np_array):
         for element in np_array:
             self.__data.append(KCell(element, self.__k))
+
+    def get_master_filename(self):
+        return self.__name
 
     def get_knf(self, i):
         return self.__data[i]
