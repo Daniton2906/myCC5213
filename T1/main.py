@@ -51,7 +51,7 @@ if seq[2] == '1':
     comparator1 = Comparator(comerc_descriptor_list)
     start = time.time()
     r = comparator1.load_data(MAIN_DATA_FOLDER + C_DESCRIP_FOLDER)
-    for tele in tele_list[2:]:
+    for tele in tele_list:
         print("calculando KNFs (k = {}) para {}...".format(K, tele))
         result = comparator1.k_nearest_frames(K, tele, DATA_FOLDER + TV_DESCRIP_FOLDER)
         #print(result.shape)
