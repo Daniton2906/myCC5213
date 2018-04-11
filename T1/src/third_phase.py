@@ -3,7 +3,30 @@ from tools.loader import Loader
 from tools.k_box import KBox
 from tools.matcher import Matcher
 
-
+'''
+Detector class
+    Info:
+        Third phase, read the knf's files, detect matches and filter the real ones.
+        Write the results in a final output file   
+    Constructor:
+        data_fn: list with all comerciales descriptors filenames for processing
+        k: number of similar frames in the knf files
+        comerc_list: list with all comerciales filenames
+        ---> saves data_file_names and k, creates data and matches list
+            create comerc_sizes dictionary, with the filename(key), shape(value) pair
+    Methods:          
+        load_data: folder(str) -> KBox list
+            --> loads the data with the knfs from the given 'folder' plus the filenames given in the Constructor,
+                returns a KBox list with the data (a list with KBoxs)   
+        detect_match: epsilon(int) tolerance(int) -> (int, KCell) list 
+            --> finds sequence of similar "comerciales". The criteria for determining which ones could be 
+                comerciales are determinated by the tolerance factor (percentage of similarity) and
+                the epsilon factor (loss tolerance between frames)
+                Returns a list contaning tuples (first tv frame, most similar KCell)
+        filter_write_results: data(np-array) name(str) folder(str) -> None 
+            --> from the 'data' matches list, filters the ones considered as "same comercial" and
+                writes the results on the file 'folder' plus 'name'            
+'''
 class Detector:
 
     def __init__(self, data_fn, k, comerc_list):
@@ -26,6 +49,8 @@ class Detector:
         return self.__data
 
     def detect_match(self, epsilon, tolerance):
+        assert 0 < tolerance <= 100
+        assert 0 <= epsilon
         # Each KBox corresponds to one television file with
         # its frames and their k nearest frames
         for kbox in self.__data:

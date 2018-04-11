@@ -14,9 +14,9 @@ IntensityVectorDescriptor class
         ---> saves all given arguments
     Methods:          
         get_descriptor: frame(int np-array) -> int np-array
-            -->  divide frame and calculates the histogram on each sub-frame. Returns the result
+            -->  for each frame, resize it and calculates the gray-scale it. Returns the result.
         compare: u(np array) v(np_array) -> float 
-            --> receive two descriptor (should be create by using this class) and return its distance
+            --> receive two descriptor (should be create by using this class) and return the cityblock distance
 '''
 
 
@@ -49,7 +49,7 @@ HistDescriptor class
         get_descriptor: frame(int np-array) -> int np-array
             --> divide frame and calculates the histogram on each sub-frame. Returns the result
         compare: u(np array) v(np_array) -> float 
-            --> receive two descriptor (should be create by using this class) and return its distance
+            --> receive two descriptor (should be create by using this class) and return the minkowski distance
 '''
 class HistDescriptor:
 

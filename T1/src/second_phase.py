@@ -2,7 +2,24 @@ from src.base import *
 from tools.k_array import KArray
 from tools.loader import Loader
 
-
+'''
+Comparator class
+    Info:
+        Second phase, read the descriptor's files, calculates the k nearest frames from each
+        television's frame and write them on secundary memory for the next phase  
+    Constructor:
+        data_file_names: list with all comerciales descriptors filenames for processing
+        ---> saves data_file_names and frames, creates descriptor list
+    Methods:          
+        load_data: folder(str) -> numpy-array list
+            --> load the data from the given 'folder' plus the filenames given in the Constructor,
+                return a numpy-array list with the data (a list with numpy-arrays)                
+        k_nearest_frames: k(int) descrip_comparer(Descriptor) master_file(str) folder(str) -> str np-array
+            --> open the descriptor file from the path 'folder' plus 'master_file' and calculates the k nearest
+                frames according to the distance used in the given 'descrip_comparer'   
+        write_on_memory: data(np-array) name(str) folder(str) -> None 
+            --> writes the 'np-array' on memory in the given 'folder', with the given 'name' plus the np-array's shape                                
+'''
 class Comparator:
 
     def __init__(self, data_file_names):

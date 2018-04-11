@@ -4,12 +4,12 @@ from tools.descriptors import HistDescriptor, IntensityVectorDescriptor
 '''
 Extractor class
     Info:
-        First phase, receives a list with video filenames and write them
-        on txt files for the next phase.        
-    Constructor Params:
+        First phase, receives a list with video filenames, gets each descriptor (per frame) 
+        and writes them on secundary memory for the next phase.        
+    Constructor:
         data_file_names: list with all video filenames for processing
         frames: amount of frames it jump for each frame (if 30 fps and frames = 10 --> takes 3 frames per second)
-        ---> saves data_file_names and frames, create output list
+        ---> saves data_file_names and frames, creates output list
     Methods:          
         set_fpc: f(int) -> None
             -->  if necessary, set frames per cell (fpc) to 'f'
@@ -17,7 +17,7 @@ Extractor class
             --> calculates histogram descriptors according to the given filenames that should be located 
                 in the given 'folder'. If necessary, cut each frame according to the given 'margin' dict, limits 
                 the processed frame to 'max_frames' int and resize each frame according to the given 'rsize' tuple.
-                Returns the result as a ()int-tuple list  
+                Returns the result as a int-tuple list  
         codify: folder(str) -> None 
             --> writes results on memory in the given 'folder', if any filename has the characters '(' or ')', it
                 will be change for '[' and ']' since the new files are written using this key characters

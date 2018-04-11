@@ -8,7 +8,7 @@ import time
 
 print("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_info.major, sys.version_info.minor, sys.version_info.micro))
 
-# GLOBAL VARRIABLES
+# GLOBAL VARIABLES
 MAIN_FOLDER = str(os.getcwd()) + "/" #" C:/Users/Daniel/Desktop/Semestre2018-1/multimedia/myCC5213/T1/"
 DATA_FOLDER = "data/"
 MAIN_DATA_FOLDER = MAIN_FOLDER + DATA_FOLDER
@@ -18,6 +18,7 @@ C_DESCRIP_FOLDER = "comerc_descriptors/"
 TV_DESCRIP_FOLDER = "tv_descriptors/"
 KNF_FOLDER = "k_nearest_frames/"
 RESULTS_FOLDER = "results/"
+
 
 def show_frame(window_name, image, valorAbsoluto= False, escalarMin0Max255= False):
     if valorAbsoluto:
