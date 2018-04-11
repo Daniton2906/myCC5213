@@ -1,7 +1,7 @@
 from src.base import *
 
 '''
-Loader class
+Matcher class
     Methods (All statics):
         find_subsequence: finds consecutive frames according on the filename, number of the frame and the given epsilon
             (this last one give a tolerance of blank frames)       
