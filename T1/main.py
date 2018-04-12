@@ -5,7 +5,7 @@ from src.third_phase import Detector
 
 # Global variables
 FRAMES_PER_CELL = 10
-K = 15
+K = 10
 RESIZE = (320, 180)  #(160, 90), (432, 768)
 FPS_RATE = 30
 TOLERANCE = 70
