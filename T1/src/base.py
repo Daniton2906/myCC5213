@@ -11,12 +11,12 @@ print("Usando OpenCV {} Python {}.{}.{}".format(cv2.__version__, sys.version_inf
 MAIN_FOLDER = str(os.getcwd()) + "/" #" C:/Users/Daniel/Desktop/Semestre2018-1/multimedia/myCC5213/T1/"
 DATA_FOLDER = "data/"
 MAIN_DATA_FOLDER = MAIN_FOLDER + DATA_FOLDER
-C_FOLDER = "comerciales/"
-TV_FOLDER = "television/"
-C_DESCRIP_FOLDER = "comerc_descriptors/"
-TV_DESCRIP_FOLDER = "tv_descriptors/"
-KNF_FOLDER = "k_nearest_frames/"
-RESULTS_FOLDER = "results/"
+C_FOLDER = MAIN_DATA_FOLDER + "comerciales/"
+TV_FOLDER = MAIN_DATA_FOLDER + "television/"
+C_DESCRIP_FOLDER = MAIN_DATA_FOLDER + "comerc_descriptors/"
+TV_DESCRIP_FOLDER = MAIN_DATA_FOLDER + "tv_descriptors/"
+KNF_FOLDER = MAIN_DATA_FOLDER + "k_nearest_frames/"
+RESULTS_FOLDER = MAIN_DATA_FOLDER + "results/"
 
 
 def show_frame(window_name, image, valorAbsoluto= False, escalarMin0Max255= False):
@@ -47,14 +47,3 @@ def open_video(filename):
         raise Exception("no puedo abrir video {}".format(filename))
     return capture
 
-
-def load_filenames(files_folder, file_format, data_folder=DATA_FOLDER):
-    new_list = []
-    folder = data_folder + files_folder
-    os.chdir(folder)
-
-    for filename in glob.glob("*." + file_format):
-        new_list.append(filename)
-
-    os.chdir("../../")
-    return new_list

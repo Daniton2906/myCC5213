@@ -36,7 +36,7 @@ class Comparator:
 
         return self.__descriptors
 
-    def k_nearest_frames(self, k, descrip_comparer, master_file, folder):
+    def k_nearest_frames(self, k, descrip_comparer, master_file, folder=None):
         assert k >= 1
         # Get television descriptor
         tele_descriptor = Loader.load_numpy_from_list(master_file, folder)

@@ -34,9 +34,11 @@ class Extractor:
         self.__fpc = f
 
     #create np array for each video
-    def process_data(self, folder, descrip_converter, margin=None, max_frames=-1, debug=False):
+    def process_data(self, descrip_converter, folder=None, margin=None, max_frames=-1, debug=False):
         for fn in self.__data:
-            capture = open_video(folder + fn)
+            if folder is not None:
+                fn = folder + fn
+            capture = open_video(fn)
             results = []
             counter = -1
             while capture.grab():
@@ -63,13 +65,12 @@ class Extractor:
                     if key == ord('q') or key == 27:
                         break
 
-                #print(frame.shape)
                 frame_descript = descrip_converter.get_descriptor(frame)
-                #print(hist_list)
                 results.append(frame_descript)
 
             capture.release()
-            #cv2.destroyAllWindows()
+            if debug:
+                cv2.destroyAllWindows()
             self.__output.append(np.array(results, dtype=int))
         return self.__output
 
