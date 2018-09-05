@@ -46,6 +46,9 @@ class Loader:
 
     @staticmethod
     def clean_data(folder):
+        if not os.path.isdir(folder):
+            return False
+
         os.chdir(folder)
         for filename in glob.glob("*"):
             os.remove(filename)

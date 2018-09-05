@@ -21,8 +21,7 @@ def main():
         sys.exit(1)
 
     # Split between tv folder path and tv file name
-    comerc_folder = sys.argv[1]
-    tmp_str = sys.argv[2].replace("\\", "/")
+    tmp_str = sys.argv[1].replace("\\", "/")
     tmp_list = tmp_str.split("/")
 
     tv_filename = tmp_list[-1]
@@ -31,6 +30,8 @@ def main():
     for s in tmp_list[1:-1]:
         tv_folder = tv_folder + "/" + s
     tv_folder = tv_folder + "/"
+
+    comerc_folder = sys.argv[2]
 
     # Counter for time
     global_counter = 0
