@@ -1,2 +1,9 @@
 T1/data/
 .idea/
+*.mp4
+*.wav
+*.mp3
+*.csv
+*.zip
+__pycache__/
+myProject/tools/misc.py
